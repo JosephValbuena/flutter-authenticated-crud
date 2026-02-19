@@ -7,7 +7,7 @@ import '../../domain/domain.dart';
 
 enum AuthStatus {checking, authenticated, notAuthenticated}
 
-final authProvider = StateNotifierProvider.autoDispose<AuthNotifier, AuthState>((ref) {
+final authProvider = StateNotifierProvider<AuthNotifier, AuthState>((ref) {
 
   final authRepository = AuthRepositoryImpl();
   final keyValueStorageService = KeyValueStorageServiceImpl();
@@ -56,7 +56,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
       final user = await authRepository.checkAuthStatus(token);
       _setLoggedUser(user);
     } catch (e) {
-      
+      logout();
     }
   }
 
